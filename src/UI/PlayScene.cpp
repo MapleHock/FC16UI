@@ -21,7 +21,7 @@ bool UI::PlayScene::init()
   auto visibleSize = Director::getInstance()->getVisibleSize();
   Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-  map_widget = TMXTiledMap::create("test.tmx");
+  map_widget = TMXTiledMap::create("res/test.tmx");
   map_widget->setPosition(-200, -200);
   map_widget->setScale(0.35f);
   this->addChild(map_widget, 0);
@@ -60,6 +60,7 @@ void UI::PlayScene::RefreshMap(float dt)
   }
 
   //refreshmap
+  //TODO fix the vector out range error
   //MainLogic::LogicUpdate();
   TMXLayer* background = map_widget->getLayer("background");
   TMXLayer* soldiers = map_widget->getLayer("soldiers");
@@ -70,9 +71,19 @@ void UI::PlayScene::RefreshMap(float dt)
       soldiers->setTileGID(SOLDIER_SER_START, Vec2(i, j));
     }
   }
+  /*
+  // soldiers update
   for (std::vector<UI::TSoldier*>::iterator i = MainLogic::soldiers.begin();
     i != MainLogic::soldiers.end(); ++i) {
     soldiers->setTileGID((**i).Info2GID(), (**i).position);
+  }
+  */
+
+  //place soldier test
+  for (int i = 0; i < map_widget->getMapSize().width; i++) {
+    for (int j = 0; j < map_widget->getMapSize().width; j++) {
+      soldiers->setTileGID(SOLDIER_SER_START + 10, Vec2(i, j));
+    }
   }
   
   is_pause = true;
