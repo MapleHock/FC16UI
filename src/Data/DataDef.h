@@ -110,6 +110,7 @@ namespace UI
 		virtual void clear();
 		virtual void UIUpdate();
 
+    int Info2GID();
 
 	};
 

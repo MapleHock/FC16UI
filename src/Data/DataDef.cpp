@@ -77,6 +77,10 @@ namespace UI
 	{
 	}
 
+  int TSoldier::Info2GID() {
+    return 0;
+  }
+
 	TPlayer::TPlayer() :UIObject(UIObject::UIObjectType::PlayerType)
 	{
 	}

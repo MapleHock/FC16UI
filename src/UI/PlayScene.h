@@ -23,6 +23,10 @@ namespace UI
     cocos2d::ui::Button* start_btn;
 
     cocos2d::Scheduler* refresh_control;
+   
+  private:
+    //TODO find a way to delete those state bool
+    bool is_pause;
 	};
 
 }
