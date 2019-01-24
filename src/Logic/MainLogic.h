@@ -55,9 +55,11 @@ namespace UI {
 		static std::string getFileDialogName();
 		static void LoadData();
 		static void LogicUpdate();
-		static void UIUpdate();
+		static void UIUpdate(cocos2d::Scene* playscene);
 		static void clearData();
 		static void WriteLog(std::string message);
+
+    static void StartScene2PlayScene();
 	};
 
 }

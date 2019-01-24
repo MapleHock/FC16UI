@@ -1,0 +1,65 @@
+Round 44
+PlayerAlive: 4
+Player0Info
+Rank 4 Score 93 KillNum 0 TowerNum 1 SurvivalRound 43 SoldierNum 5 Resource 22 MaxPopulation 30 Population 10
+Player1Info
+Rank 3 Score 93 KillNum 0 TowerNum 1 SurvivalRound 43 SoldierNum 5 Resource 22 MaxPopulation 30 Population 10
+Player2Info
+Rank 2 Score 93 KillNum 0 TowerNum 1 SurvivalRound 43 SoldierNum 5 Resource 22 MaxPopulation 30 Population 10
+Player3Info
+Rank 1 Score 93 KillNum 0 TowerNum 1 SurvivalRound 43 SoldierNum 5 Resource 22 MaxPopulation 30 Population 10
+TowerInfo
+TowerID 0 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 1 Owner 0 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 2 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 3 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 4 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 5 Owner 1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 6 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 7 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 8 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 9 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 10 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 11 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 12 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 13 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 14 Owner 2 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 15 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 16 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 17 Owner -1 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+TowerID 18 Owner 3 Level 1 Blood 200 Recruiting 0 RecruitingRound -1 RecruitingType None
+SoldierInfo
+SoldierID 1 Owner 0 Type LightInfantry Level 1 Blood 100 X_Position 22 Y_Position 99
+SoldierID 2 Owner 1 Type LightInfantry Level 1 Blood 100 X_Position 73 Y_Position 93
+SoldierID 3 Owner 2 Type LightInfantry Level 1 Blood 100 X_Position 10 Y_Position 25
+SoldierID 4 Owner 3 Type LightInfantry Level 1 Blood 100 X_Position 79 Y_Position 88
+SoldierID 5 Owner 0 Type LightInfantry Level 1 Blood 100 X_Position 22 Y_Position 97
+SoldierID 6 Owner 1 Type LightInfantry Level 1 Blood 100 X_Position 73 Y_Position 91
+SoldierID 7 Owner 2 Type LightInfantry Level 1 Blood 100 X_Position 10 Y_Position 23
+SoldierID 8 Owner 3 Type LightInfantry Level 1 Blood 100 X_Position 79 Y_Position 72
+SoldierID 9 Owner 0 Type LightInfantry Level 1 Blood 100 X_Position 22 Y_Position 95
+SoldierID 10 Owner 1 Type LightInfantry Level 1 Blood 100 X_Position 73 Y_Position 89
+SoldierID 11 Owner 2 Type LightInfantry Level 1 Blood 100 X_Position 10 Y_Position 21
+SoldierID 12 Owner 3 Type LightInfantry Level 1 Blood 100 X_Position 79 Y_Position 52
+SoldierID 13 Owner 0 Type LightInfantry Level 1 Blood 100 X_Position 22 Y_Position 93
+SoldierID 14 Owner 1 Type LightInfantry Level 1 Blood 100 X_Position 73 Y_Position 87
+SoldierID 15 Owner 2 Type LightInfantry Level 1 Blood 100 X_Position 10 Y_Position 19
+SoldierID 16 Owner 3 Type LightInfantry Level 1 Blood 100 X_Position 79 Y_Position 32
+SoldierID 17 Owner 0 Type LightInfantry Level 1 Blood 100 X_Position 22 Y_Position 83
+SoldierID 18 Owner 1 Type LightInfantry Level 1 Blood 100 X_Position 73 Y_Position 85
+SoldierID 19 Owner 2 Type LightInfantry Level 1 Blood 100 X_Position 10 Y_Position 13
+SoldierID 20 Owner 3 Type LightInfantry Level 1 Blood 100 X_Position 79 Y_Position 12
+CommandsInfo
+Player0Commands
+Move SoldierID 17 Direction UP Distance 2
+Player1Commands
+Attack SoldierID 12 VicType Soldier VictimID 21
+Attack SoldierID 12 VicType Tower VictimID 21
+Player2Commands
+Move SoldierID 19 Direction UP Distance 2
+Player3CommandsInfo
+Move SoldierID 4 Direction UP Distance 2
+Move SoldierID 8 Direction UP Distance 2
+Move SoldierID 12 Direction UP Distance 2
+Move SoldierID 16 Direction UP Distance 2
+Move SoldierID 20 Direction UP Distance 2

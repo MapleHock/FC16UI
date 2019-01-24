@@ -1,6 +1,7 @@
 #include "StartScene.h"
 #include "SimpleAudioEngine.h"
 #include "../Logic/MainLogic.h"
+#include "PlayScene.h"
 USING_NS_CC;
 
 namespace UI
@@ -26,6 +27,7 @@ namespace UI
 		startSprite->setScale(0.5);
 		startSprite->setPosition(500, 300);
 		this->addChild(startSprite, 0);
+
 		//auto closeItem = MenuItemImage::create("closeNormal.png", "closeSelected.png",CC_CALLBACK_1(....))
 		auto loadFileItem = MenuItemImage::create("loadFileNormal.jpg", "loadFileSelected.jpg", CC_CALLBACK_1(StartScene::loadFileClickedCallback, this));
 		if (loadFileItem == nullptr ||
@@ -51,5 +53,6 @@ namespace UI
 	void StartScene::loadFileClickedCallback(cocos2d::Ref* pSender)
 	{
 		MainLogic::LoadData();
+    MainLogic::StartScene2PlayScene();
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "../Data/DataDef.h"
-
+#include "ui/CocosGUI.h"
 
 namespace UI
 {
@@ -12,6 +12,17 @@ namespace UI
 		virtual bool init();
 
 		CREATE_FUNC(PlayScene);
+
+    void RefreshMap(float dt);
+
+    void StartClickedCallback();
+
+
+    cocos2d::TMXTiledMap* map_widget;
+
+    cocos2d::ui::Button* start_btn;
+
+    cocos2d::Scheduler* refresh_control;
 	};
 
 }

@@ -21,6 +21,8 @@ namespace UI
 		void loadFileClickedCallback(cocos2d::Ref* pSender);
 
 		CREATE_FUNC(StartScene);
+
+ 
 	};
 
 }

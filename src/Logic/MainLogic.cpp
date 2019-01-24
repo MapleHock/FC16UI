@@ -1,5 +1,6 @@
 #include "MainLogic.h"
 #include "../UI/StartScene.h"
+#include "../UI/PlayScene.h"
 #include <windows.h>
 #include <thread>
 #include <chrono>
@@ -47,7 +48,7 @@ namespace UI
 	std::vector<UI::TSoldier*>MainLogic::soldiers = *(new std::vector<UI::TSoldier*>());
 	std::vector<UI::TPlayer*>MainLogic::players = *(new std::vector<UI::TPlayer*>());
 	
-	std::string MainLogic::mapFile = "gameMap.png";
+	std::string MainLogic::mapFile = "gameMap.png"; //TODO delete it ?
 
 	MainLogic::MainLogic()
 	{
@@ -112,8 +113,6 @@ namespace UI
 
 		auto scene = StartScene::createScene();
 		
-
-
 		director->runWithScene(scene);
 		return true;
 	}
@@ -151,10 +150,13 @@ namespace UI
 		MainLogic::gameRound = 0;
 		MainLogic::gameState = GameState::GAME_RUNNING;
 		MainLogic::clearData();
-		while (MainLogic::gameRound < MAX_ROUND)
+
+		/*while (MainLogic::gameRound < MAX_ROUND)
 		{
 			MainLogic::GameLoop();
-		};
+		};*/
+
+    MainLogic::GameLoop();
 		MainLogic::GameOver();
 	}
 
@@ -167,7 +169,7 @@ namespace UI
 		else
 		{
 			MainLogic::LogicUpdate();
-			MainLogic::UIUpdate();
+			MainLogic::UIUpdate(Director::getInstance()->getRunningScene());
 			std::this_thread::sleep_for(std::chrono::milliseconds(delayPerRound));
 			
 		}
@@ -259,19 +261,21 @@ namespace UI
 				}
 			}
 		}
+    
 		return std::string(filename);
 	}
 
 	void MainLogic::LoadData()
 	{
-		loadFileName = getFileDialogName();
+    // TODO fix the dialog open file and fileptr cannot open it
+		/*loadFileName = getFileDialogName();
 		MainLogic::WriteLog("Loading file from  " + loadFileName);
 		if (!loadFileName.size())
 		{
 			return;
-		}
-		fopen_s(&MainLogic::loadFilePtr, MainLogic::loadFileName.c_str(), "r");
-		if (loadFilePtr == nullptr)
+		}*/
+		fopen_s(&MainLogic::loadFilePtr, "E:\\programming\\FC16UI\\FC16UI\\Debug.win32\\res\\Enresult.txt", "r");
+		if (loadFilePtr == NULL)
 		{
 			return;
 		}
@@ -292,6 +296,13 @@ namespace UI
 		}
 		fscanf_s(fp, "PlayerAlive: %d\n", &MainLogic::playerAlive);
 		
+    //TODO no temp?
+    if (MainLogic::players.size() == 0) {
+      for (int i = 0; i < PLAYER_NUM; i++) {
+        UI::TPlayer* temp = new UI::TPlayer();
+        MainLogic::players.push_back(temp);
+      }
+    }
 
 		for (int i = 0; i < PLAYER_NUM; i++)
 		{
@@ -314,101 +325,87 @@ namespace UI
 		//Towers
 		for (auto item : MainLogic::towers)
 			delete item;
-		MainLogic::towers.clear();
-		TTower* newTower;
+MainLogic::towers.clear();
+TTower* newTower;
 
-		fscanf_s(fp, "TowerInfo\n");
-		while(fscanf_s(fp, "TowerID %d Owner %d Level %d Blood %d Recruiting %d RecruitingRound %d RecruitingType %s\n",
-				&a, &b, &c, &d, &e, &f, h, 20)==7)
-		{
-			newTower = new TTower(a, b, c, d, e, f, std::string(h));
-			MainLogic::towers.push_back(newTower);
-		}
-		fscanf_s(fp, "SoldierInfo\n");
-		for (auto item : MainLogic::soldiers)
-			delete item;
-		MainLogic::soldiers.clear();
-		TSoldier* newSoldier=nullptr;
-		while (fscanf_s(fp, "SoldierID %d Owner %d Type %s Level %d Blood %d X_Position %d Y_Position %d\n", &a, &b, h, 20, &d, &e, &f, &g) == 7)
-		{
-			newSoldier = new TSoldier(a, b, h, d, e, f, g);
-			MainLogic::soldiers.push_back(newSoldier);
-		}
+fscanf_s(fp, "TowerInfo\n");
+while (fscanf_s(fp, "TowerID %d Owner %d Level %d Blood %d Recruiting %d RecruitingRound %d RecruitingType %s\n",
+  &a, &b, &c, &d, &e, &f, h, 20) == 7) {
+  newTower = new TTower(a, b, c, d, e, f, std::string(h));
+  MainLogic::towers.push_back(newTower);
+}
+fscanf_s(fp, "SoldierInfo\n");
+for (auto item : MainLogic::soldiers)
+delete item;
+MainLogic::soldiers.clear();
+TSoldier* newSoldier = nullptr;
+while (fscanf_s(fp, "SoldierID %d Owner %d Type %s Level %d Blood %d X_Position %d Y_Position %d\n", &a, &b, h, 20, &d, &e, &f, &g) == 7) {
+  newSoldier = new TSoldier(a, b, h, d, e, f, g);
+  MainLogic::soldiers.push_back(newSoldier);
+}
 
-		fscanf_s(fp, "CommandsInfo\n");
-		
-		for (int i = 0; i < PLAYER_NUM; i++)
-		{
-			if (fscanf_s(fp, "Player%dCommands\n", &playerID) != 1)
-				break;
-			while (true)
-			{
-				if (fscanf_s(fp, "Command Move SoldierID %d Direction %s Distance %d\n", &a, h, 20, &b)==3)
-				{
-					try
-					{
-						MainLogic::soldiers[a]->soldierMove.move = true;
-						MainLogic::soldiers[a]->soldierMove.moveDirection = moveDirStr2Enum(std::string(h));
-						MainLogic::soldiers[a]->soldierMove.moveDistance = b;
-					}
-					catch (const std::exception&)
-					{
-						//Nothing
-					}
-					continue;
-				}
-				else if (fscanf_s(fp, "Command Attack SoldierID %d VicType %s VictimID %d\n", &a, h, 20, &b) == 3)
-				{
-					try
-					{
-						if (std::string(h) == "Soldier")
-							MainLogic::soldiers[a]->victim = MainLogic::soldiers[b];
-						else if (std::string(h) == "Tower")
-							MainLogic::soldiers[a]->victim = MainLogic::towers[b];
-					}
-					catch (const std::exception&)
-					{
-						//Nothing
-					}
-					continue;
-				}
-				else if (fscanf_s(fp, "Command Upgrade TowerID %d\n", &a) == 1)
-				{
-					try
-					{
-						MainLogic::towers[a]->upgrade = true;
-					}
-					catch (const std::exception&)
-					{
+fscanf_s(fp, "CommandsInfo\n");
 
-					}
-					
-					continue;
-				}
-				else if (fscanf_s(fp, "Command Produce TowerID %d Type %s\n", &a, h, 20) == 2)
-				{
-					try
-					{
-						MainLogic::towers[a]->produceSoldier.is_produce = true;
-						MainLogic::towers[a]->produceSoldier.soldierType = SoldierTypeStr2Enum(std::string(h));
-					}
-					catch (const std::exception&)
-					{
+for (int i = 0; i < PLAYER_NUM; i++) {
+  if (fscanf_s(fp, "Player%dCommands\n", &playerID) != 1)
+    break;
+  while (true) {
+    if (fscanf_s(fp, "Command Move SoldierID %d Direction %s Distance %d\n", &a, h, 20, &b) == 3) {
+      try {
+        MainLogic::soldiers[a]->soldierMove.move = true;
+        MainLogic::soldiers[a]->soldierMove.moveDirection = moveDirStr2Enum(std::string(h));
+        MainLogic::soldiers[a]->soldierMove.moveDistance = b;
+      }
+      catch (const std::exception&) {
+        //Nothing
+      }
+      continue;
+    } else if (fscanf_s(fp, "Command Attack SoldierID %d VicType %s VictimID %d\n", &a, h, 20, &b) == 3) {
+      try {
+        if (std::string(h) == "Soldier")
+          MainLogic::soldiers[a]->victim = MainLogic::soldiers[b];
+        else if (std::string(h) == "Tower")
+          MainLogic::soldiers[a]->victim = MainLogic::towers[b];
+      }
+      catch (const std::exception&) {
+        //Nothing
+      }
+      continue;
+    } else if (fscanf_s(fp, "Command Upgrade TowerID %d\n", &a) == 1) {
+      try {
+        MainLogic::towers[a]->upgrade = true;
+      }
+      catch (const std::exception&) {
 
-					}
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
+      }
 
-	}
+      continue;
+    } else if (fscanf_s(fp, "Command Produce TowerID %d Type %s\n", &a, h, 20) == 2) {
+      try {
+        MainLogic::towers[a]->produceSoldier.is_produce = true;
+        MainLogic::towers[a]->produceSoldier.soldierType = SoldierTypeStr2Enum(std::string(h));
+      }
+      catch (const std::exception&) {
 
-	void MainLogic::UIUpdate()
-	{
-	}
+      }
+    } else {
+      break;
+    }
+  }
+}
+
+  }
+
+void MainLogic::UIUpdate(Scene* playscene) 
+{
+  PlayScene* current_scene = dynamic_cast<PlayScene*>(playscene);
+  //TODO add no this scene waring
+  if (current_scene == NULL) {
+    return;
+  }
+ // current_scene->RefreshMap();
+}
+
 
 	void MainLogic::clearData()
 	{
@@ -423,4 +420,11 @@ namespace UI
 	{
 		logFile << message << std::endl;
 	}
+
+  void MainLogic::StartScene2PlayScene() 
+  {
+    // change scence
+    auto scene = PlayScene::createScene();
+    Director::getInstance()->replaceScene(scene);
+  }
 }
